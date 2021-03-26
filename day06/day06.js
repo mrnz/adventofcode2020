@@ -1,0 +1,5 @@
+const input = require('fs')
+    .readFileSync(`${__dirname}/day06-input.txt`)
+    .toString()
+console.log(`day 6 part 1 - result is: ${require('./6-1.js')(input)}`)
+console.log(`day 6 part 2 - result is: ${require('./6-2.js')(input)}`)
