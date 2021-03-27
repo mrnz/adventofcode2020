@@ -28,7 +28,7 @@ module.exports = (data, step = 3) => {
                 .map((x) => a.indexOf(x))
         }
     }
-    l(a)
+
     let b = [new Path(0, 1)]
 
     while (b.length) {
@@ -46,8 +46,6 @@ module.exports = (data, step = 3) => {
                     .map((x) => new Path(x, b[idx].multi)),
             ]
         }
-
-        l('----')
 
         b = la.filter((x) => {
             if (a[x.idx] === max) {
