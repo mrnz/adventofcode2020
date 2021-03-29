@@ -1,60 +1,28 @@
 const l = console.log
 module.exports = (data, step = 3) => {
     let activePaths = [0]
-    let res = 0
+
     const a = data
         .trim()
         .split('\n')
         .map(Number)
         .sort((a, b) => a - b)
 
-    const max = a[a.length - 1]
+    const calc = (array, idx, memo = {}) => {
+        let total = 0
+        if (array.length - 1 === idx) return 1
 
-    const calc = (idx) => {
-        return
+        if (idx in memo) return memo[idx]
+
+        if (array[idx + 1] && array[idx + 1] - array[idx] <= 3)
+            total += calc(array, idx + 1, memo)
+        if (array[idx + 2] && array[idx + 2] - array[idx] <= 3)
+            total += calc(array, idx + 2, memo)
+        if (array[idx + 3] && array[idx + 3] - array[idx] <= 3)
+            total += calc(array, idx + 3, memo)
+
+        memo[idx] = total
+        return total
     }
-
-    class Path {
-        constructor(idx, multi) {
-            this.idx = idx
-            this.multi = multi
-        }
-        next() {
-            return a
-                .slice(this.idx + 1, this.idx + 1 + step)
-                .filter((x) => {
-                    return x - a[this.idx] <= step
-                })
-                .map((x) => a.indexOf(x))
-        }
-    }
-
-    let b = [new Path(0, 1)]
-
-    while (b.length) {
-        let la = []
-
-        for (let idx = 0; idx < b.length; idx++) {
-            thisStep = [...b[idx].next()]
-            la = [
-                ...la,
-                ...b[idx]
-                    .next()
-                    .map((x) => {
-                        return x
-                    })
-                    .map((x) => new Path(x, b[idx].multi)),
-            ]
-        }
-
-        b = la.filter((x) => {
-            if (a[x.idx] === max) {
-                res++
-                return false
-            }
-            return true
-        })
-    }
-
-    return res
+    return calc(a, 0)
 }
